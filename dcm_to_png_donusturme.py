@@ -69,3 +69,4 @@ output_folder_path = r"C:\Users\canla\Desktop\yeniC"  # Çıktı PNG dosyaların
 
 # Klasördeki DICOM dosyalarını işle ve PNG'ye dönüştür
 process_directory(dicom_folder_path, output_folder_path)
+
