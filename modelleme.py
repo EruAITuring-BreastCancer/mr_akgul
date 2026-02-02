@@ -1,5 +1,4 @@
 import torch
-import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
@@ -52,18 +51,18 @@ transform = transforms.Compose([
 
 batch_size = 32
 
-train_dataset = MammoDataset(image_dir=r'C:\Users\canla\Desktop\ayrilmis_veriler\train',
-                             annotation_dir=r'C:\Users\canla\Desktop\ayrilmis_veriler\train',
+train_dataset = MammoDataset(image_dir='data/train',
+                             annotation_dir='data/train',
                              transform=transform)
 trainloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
 
-test_dataset = MammoDataset(image_dir=r'C:\Users\canla\Desktop\ayrilmis_veriler\test',
-                            annotation_dir=r'C:\Users\canla\Desktop\ayrilmis_veriler\test',
+test_dataset = MammoDataset(image_dir='data/test',
+                            annotation_dir='data/test',
                             transform=transform)
 testloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
 
-val_dataset = MammoDataset(image_dir=r'C:\Users\canla\Desktop\ayrilmis_veriler\validation',
-                           annotation_dir=r'C:\Users\canla\Desktop\ayrilmis_veriler\validation',
+val_dataset = MammoDataset(image_dir='data/validation',
+                           annotation_dir='data/validation',
                            transform=transform)
 valloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
 
@@ -88,7 +87,7 @@ class Net(nn.Module):
         return x
 
 
-PATH = r'C:\Users\canla\Desktop\netModel\model.pth'
+PATH = 'models/model.pth'
 net = Net()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
@@ -169,17 +168,17 @@ def draw_bounding_boxes(img, label, coords):
     plt.show()
 
 
-image_files = [f for f in os.listdir(r'C:\Users\canla\Desktop\ayrilmis_veriler\test') if f.endswith('.png')]
+image_files = [f for f in os.listdir('data/test') if f.endswith('.png')]
 random_files = random.sample(image_files, 10)
 
 for image_file in random_files:
-    annotation_path = os.path.join(r'C:\Users\canla\Desktop\ayrilmis_veriler\test', image_file.replace('.png', '.xml'))
+    annotation_path = os.path.join('data/test', image_file.replace('.png', '.xml'))
 
     if not os.path.exists(annotation_path):
         print(f"Annotation file not found for {image_file}")
         continue
 
-    img_path = os.path.join(r'C:\Users\canla\Desktop\ayrilmis_veriler\test', image_file)
+    img_path = os.path.join('data/test', image_file)
     img = Image.open(img_path).convert('L')
     img_original = img.copy()
     img = transform(img)

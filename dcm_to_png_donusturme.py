@@ -1,7 +1,6 @@
 import os
 import pydicom
 import numpy as np
-import matplotlib.pyplot as plt
 from pathlib import Path
 from pydicom.pixel_data_handlers.util import apply_voi_lut
 from PIL import Image
@@ -64,8 +63,8 @@ def process_directory(directory_path, output_directory):
 
 
 # Klasör yolunu belirtin
-dicom_folder_path = r"C:\Users\canla\Desktop\Ergul"  # Burayı kendi dizininizle değiştirin
-output_folder_path = r"C:\Users\canla\Desktop\yeniC"  # Çıktı PNG dosyalarının kaydedileceği klasör
+dicom_folder_path = "data/dicom_images"  # DICOM dosyalarının bulunduğu klasör
+output_folder_path = "data/png_images"  # Çıktı PNG dosyalarının kaydedileceği klasör
 
 # Klasördeki DICOM dosyalarını işle ve PNG'ye dönüştür
 process_directory(dicom_folder_path, output_folder_path)
