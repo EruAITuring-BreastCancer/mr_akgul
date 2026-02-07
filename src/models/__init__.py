@@ -1,0 +1,4 @@
+"""
+İnitializasyon dosyası
+"""
+

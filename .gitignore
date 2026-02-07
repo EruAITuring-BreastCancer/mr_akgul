@@ -24,17 +24,7 @@ wheels/
 venv/
 env/
 ENV/
-env.bak/
-venv.bak/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-*.ipynb_checkpoints/
-
-# PyTorch Model Weights
-*.pth
-*.pt
-!yolov8x.pt
+.venv
 
 # IDE
 .vscode/
@@ -44,28 +34,40 @@ venv.bak/
 *~
 .DS_Store
 
-# Data folders (büyük veri setleri)
-data/dicom_images/
-data/png_images/
-data/test_images/
-data/cropped_images/
-data/train/
-data/test/
-data/validation/
-data/annotations/
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
 
-# Model outputs
-models/*.pth
-models/*.pt
-!models/.gitkeep
-runs/
-outputs/
+# PyTorch
+*.pth
+*.pt
+!yolov8n.pt  # Keep default YOLO weights
+
+# Data
+data/
+datasets/
+*.dcm
+*.dicom
+
+# Outputs
+outputs/models/*.pth
+outputs/results/*.png
+outputs/results/*.jpg
 
 # Logs
 *.log
 logs/
+runs/
 
 # OS
-Thumbs.db
 .DS_Store
+Thumbs.db
+
+# Config (local overrides)
+configs/config.local.yaml
+
+# Temporary files
+*.tmp
+temp/
+tmp/
 
