@@ -6,26 +6,16 @@ Mamografi görüntülerinden meme kanseri tespiti ve BI-RADS sınıflandırma i�
 
 - Veri setlerini topladık (RSNA: PNG, INbreast: DICOM)
 - DICOM görüntüleri PNG formatına dönüştürdük
-- YOLO ile meme bölgelerini tespit edip kırptık (ROI extraction, %82 başarı)
-- Basit bir binary classification modeli kurduk
+- YOLO ile meme bölgelerini tespit edip kırptık (ROI extraction)
+- Basit bir ensemble learning modeli kurduk(BIRADS4 için)
 
 ## Dosyalar
 
-**dcm_to_png_donusturme.py** - DICOM formatındaki INbreast görüntülerini PNG'ye çevirir.
+**dcm_to_png_converter.py** - DICOM formatındaki INbreast görüntülerini PNG'ye çevirir.
 
 **YOLO.py** - YOLOv8 ile mamografi görüntülerinden meme bölgelerini tespit eder ve kırpar.
 
-**modelleme.py** - Binary classification yapan basit CNN modeli. Kırpılmış görüntüleri sınıflandırır.
-
-**Recognition_Manuel.py** - Deneysel alternatif model. Şu an kullanılmıyor.
-
-**NBCL_Binary_Egitim.ipynb** - Binary classification eğitim dosyası.
-
-## Kurulum
-
-```bash
-pip install -r requirements.txt
-```
+**çoklu-sınıflandırma-model** - Başlangıç için BIRADS4 ensemble learning modeli kurduk
 
 ## Sıradaki Adımlar
 
