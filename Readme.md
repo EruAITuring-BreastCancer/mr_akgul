@@ -7,7 +7,7 @@ Mamografi görüntülerinden meme kanseri tespiti ve BI-RADS sınıflandırma i�
 - Veri setlerini topladık (RSNA: PNG, INbreast: DICOM)
 - DICOM görüntüleri PNG formatına dönüştürdük
 - YOLO ile meme bölgelerini tespit edip kırptık (ROI extraction)
-- Basit bir binary classification modeli kurduk
+- Basit bir ensemble learning modeli kurduk
 
 
 ## Sıradaki Adımlar
