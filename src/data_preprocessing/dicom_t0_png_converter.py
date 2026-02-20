@@ -34,10 +34,10 @@ def save_as_png(img_data, output_path):
     img.save(output_path)
 
 
-# Klasördeki tüm DICOM dosyalarını işleme
+# Klasördeki tüm DICOM dosyalarını işleme (alt klasörler dahil)
 def process_directory(directory_path, output_directory):
-    # Klasördeki tüm DICOM dosyalarını almak
-    dicom_files = [f for f in Path(directory_path).iterdir() if f.suffix.lower() == '.dcm']
+    # Klasördeki tüm DICOM dosyalarını almak (recursive)
+    dicom_files = list(Path(directory_path).rglob('*.dcm'))
 
     # Çıktı klasörünü oluştur
     os.makedirs(output_directory, exist_ok=True)
@@ -49,8 +49,10 @@ def process_directory(directory_path, output_directory):
             # DICOM dosyasını oku
             img_data = read_xray(dicom_path)
 
-            # PNG formatında kaydet
-            output_path = os.path.join(output_directory, dicom_path.stem + '.png')
+            # PNG formatında kaydet - alt klasör yapısını koruyan bir isim oluştur
+            relative_path = dicom_path.relative_to(directory_path)
+            output_filename = str(relative_path.with_suffix('.png')).replace(os.sep, '_')
+            output_path = os.path.join(output_directory, output_filename)
             save_as_png(img_data, output_path)
 
             processed_count += 1
@@ -63,8 +65,8 @@ def process_directory(directory_path, output_directory):
 
 
 # Klasör yolunu belirtin
-dicom_folder_path = "/Users/ergulakgul/Downloads/rsna-pneumonia-detection-challenge"  # DICOM dosyalarının bulunduğu klasör
-output_folder_path = "/Users/ergulakgul/Downloads/rsna-pngs"  # Çıktı PNG dosyalarının kaydedileceği klasör
+dicom_folder_path = "/Users/ergulakgul/Desktop/yeni-veri-seti"  # DICOM dosyalarının bulunduğu klasör
+output_folder_path = "/Users/ergulakgul/Desktop/yeni-veri-seti-cıktı"  # Çıktı PNG dosyalarının kaydedileceği klasör
 
 # Klasördeki DICOM dosyalarını işle ve PNG'ye dönüştür
 process_directory(dicom_folder_path, output_folder_path)
