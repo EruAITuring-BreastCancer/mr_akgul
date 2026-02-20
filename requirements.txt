@@ -1,9 +1,9 @@
-# Temel PyTorch ve Torchvision
-torch>=2.0.0
-torchvision>=0.15.0
+# Temel PyTorch ve Torchvision (Uyumlu versiyonlar)
+torch==2.1.0
+torchvision==0.16.0
 
 # YOLO ve Computer Vision
-ultralytics>=8.0.0
+ultralytics==8.0.196
 opencv-python>=4.7.0
 
 # Medikal Görüntü İşleme
