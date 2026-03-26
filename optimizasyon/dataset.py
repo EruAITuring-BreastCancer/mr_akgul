@@ -35,7 +35,7 @@ class CustomImageDataset(Dataset):
     def __getitem__(self, idx):
         try:
             image = Image.open(self.image_paths[idx]).convert('RGB')
-        except Exception as e:
+        except Exception:
             new_idx = (idx + 1) % len(self.image_paths)
             return self.__getitem__(new_idx)
         label = self.labels[idx]
