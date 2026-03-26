@@ -10,13 +10,13 @@ class DenseNetModel(nn.Module):
         if model_size == '121':
             self.model = models.densenet121(weights=None)
             if pretrained:
-                weight_path = '/app/medical_weights/DenseNet121.pt'
+                weight_path = '/mnt/DEPO/Birads_Tubitak/kodlar/DenseNet121.pt'
                 if os.path.exists(weight_path):
                     state_dict = torch.load(weight_path, map_location='cpu')
                     state_dict = {k: v for k, v in state_dict.items() if not k.startswith('classifier')}
                     self.model.load_state_dict(state_dict, strict=False)
         else:
-            raise ValueError("Geçersiz boyut.")
+            raise ValueError("Gecersiz boyut.")
 
         for param in self.model.parameters():
             param.requires_grad = False
@@ -47,7 +47,7 @@ class DenseNetModel(nn.Module):
 
 def get_model(model_name: str, num_classes: int, model_size: Optional[str] = None, pretrained: bool = True, dropout_rate: float = 0.3) -> nn.Module:
     model_name = model_name.lower()
-    os.environ['TORCH_HOME'] = '/media/agah/Sata/torch_cache'
+    os.environ['TORCH_HOME'] = '/mnt/DEPO/Birads_Tubitak/torch_cache'
     
     if model_name == 'densenet':
         size = model_size or '121'
