@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 import numpy as np
@@ -155,53 +154,3 @@ class Trainer:
         self.best_val_f1 = checkpoint.get('best_val_f1', 0.0)
         self.history = checkpoint['history']
         self.start_epoch = checkpoint['epoch'] + 1
-
-def test_model(model: nn.Module, test_loader: DataLoader, device: str = 'cuda', class_names: Optional[List[str]] = None, output_dir: str = 'outputs') -> Dict:
-    model.eval()
-    model = model.to(device)
-    all_preds = []
-    all_targets = []
-    all_probs = []
-
-    with torch.no_grad():
-        for inputs, targets in test_loader:
-            inputs, targets = inputs.to(device), targets.to(device)
-            outputs = model(inputs)
-            probs = torch.softmax(outputs, dim=1)
-            _, predicted = outputs.max(1)
-            all_preds.extend(predicted.cpu().numpy())
-            all_targets.extend(targets.cpu().numpy())
-            all_probs.extend(probs.cpu().numpy())
-
-    all_preds = np.array(all_preds)
-    all_targets = np.array(all_targets)
-    all_probs = np.array(all_probs)
-    accuracy = 100. * (all_preds == all_targets).sum() / len(all_targets)
-    f1_macro = f1_score(all_targets, all_preds, average='macro') * 100
-    f1_weighted = f1_score(all_targets, all_preds, average='weighted') * 100
-    f1_per_class = f1_score(all_targets, all_preds, average=None) * 100
-
-    if class_names is None:
-        class_names = [f'Class {i}' for i in range(len(np.unique(all_targets)))]
-
-    report = classification_report(all_targets, all_preds, target_names=class_names, digits=4)
-    cm = confusion_matrix(all_targets, all_preds)
-    output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
-
-    results = {
-        'accuracy': float(accuracy),
-        'f1_macro': float(f1_macro),
-        'f1_weighted': float(f1_weighted),
-        'f1_per_class': {name: float(f1) for name, f1 in zip(class_names, f1_per_class)},
-        'classification_report': report,
-        'confusion_matrix': cm.tolist(),
-        'predictions': all_preds.tolist(),
-        'targets': all_targets.tolist(),
-        'probabilities': all_probs.tolist()
-    }
-    results_path = output_path / 'test_results.json'
-    with open(results_path, 'w') as f:
-        json.dump(results, f, indent=2)
-
-    return results

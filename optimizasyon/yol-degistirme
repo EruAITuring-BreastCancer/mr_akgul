@@ -1,0 +1,10 @@
+import pandas as pd
+
+df = pd.read_csv("kirpilmis_etiketler.csv")
+
+eski_yol = "/media/agah/Sata/Breast_veriler/Teknofest_Breast_PNG_Kirpilmis/PNG_Görüntüler/"
+yeni_yol = "C:/okul_bilgisayari/veri_seti_klasoru/PNG_Görüntüler/"
+
+df['image_path'] = df['image_path'].str.replace(eski_yol, yeni_yol, regex=False)
+
+df.to_csv("okul_etiketleri.csv", index=False)
